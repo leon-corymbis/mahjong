@@ -1,11 +1,17 @@
 package mahjong
 
+import "sync"
+
 /**
 * Game holds information about the state of the game
  */
 type Game struct {
 	ruleset Ruleset
-	hands   map[Wind]Hand
+	hands   map[Wind]Player
+
+	turn Wind
+
+	sync.Mutex
 }
 
 /**
@@ -21,10 +27,18 @@ type GameConfig interface {
 func New(gc GameConfig) *Game {
 	g := &Game{
 		ruleset: gc.Ruleset(),
-		hands:   make(map[Wind]Hand, 4),
+		hands:   make(map[Wind]Player, 4),
 	}
 
 	return g
 }
 
-// TODO: get each wind from the ruleset, and then give each player 13 tiles
+/**
+* RegisterIntent confers the desire to register a
+* group of tiles as a "combo", and to satisfy it at
+* the earliest possible convenience
+ */
+func (g *Game) RegisterIntent(w Wind, i Intent) error {
+
+	return nil
+}
